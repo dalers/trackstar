@@ -38,17 +38,7 @@ return array(
 			// enable cookie-based authentication
 			'allowAutoLogin'=>true,
 		),
-		// uncomment the following to enable URLs in path-format
-		/*
-		'urlManager'=>array(
-			'urlFormat'=>'path',
-			'rules'=>array(
-				'<controller:\w+>/<id:\d+>'=>'<controller>/view',
-				'<controller:\w+>/<action:\w+>/<id:\d+>'=>'<controller>/<action>',
-				'<controller:\w+>/<action:\w+>'=>'<controller>/<action>',
-			),
-		),
-		*/
+		
 		'authManager'=>array(
 			'class'=>'CDbAuthManager',
 		    'connectionID'=>'db',
@@ -76,14 +66,17 @@ return array(
 			'routes'=>array(
 				array(
 					'class'=>'CFileLogRoute',
-					'levels'=>'error, warning',
+					'levels'=>'error',
 				),
-				// uncomment the following to show log messages on web pages
-				/*
 				array(
-					'class'=>'CWebLogRoute',
+					'class'=>'CFileLogRoute',
+					'levels'=>'info, trace',
+					'logFile'=>'infoMessages.log',
 				),
-				*/
+		     	array(
+					'class'=>'CWebLogRoute',
+					'levels'=>'warning',
+				),
 			),
 		),
 		'urlManager'=>array(
@@ -94,7 +87,10 @@ return array(
 				
 			),
 			'showScriptName'=>false,
-		),    
+		), 
+		'cache'=>array(
+			'class'=>'system.caching.CFileCache',
+		),   
 		
 	),
 

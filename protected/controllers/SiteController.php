@@ -72,6 +72,15 @@ class SiteController extends Controller
 	 */
 	public function actionLogin()
 	{
+		Yii::trace("The actionLogin() method is being requested", "application.controllers.SiteController");
+		
+		//if they are already logged in, redirect them to the home page
+		if(!Yii::app()->user->isGuest) 
+		{
+			$this->redirect(Yii::app()->homeUrl);
+		}
+		
+		
 		$model=new LoginForm;
 
 		// if it is ajax validation request
@@ -86,12 +95,28 @@ class SiteController extends Controller
 		{
 			$model->attributes=$_POST['LoginForm'];
 			// validate user input and redirect to the previous page if valid
-			if($model->validate() && $model->login())
+			if($model->validate() && $model->login()) 
+			{
+				Yii::log("Successful login of user: " . Yii::app()->user->id, "info", "application.controllers.SiteController");
 				$this->redirect(Yii::app()->user->returnUrl);
+			}
+			else
+			{
+				Yii::log("Failed login attempt", "warning", "application.controllers.SiteController");
+			}
+				
 		}
 		// display the login form
 		$this->render('login',array('model'=>$model));
 	}
+	
+	
+	public function actionShowLog()
+	{
+		echo "Logged Messages:<br><br>";
+		CVarDumper::dump(Yii::getLogger()->getLogs());
+	}
+	
 
 	/**
 	 * Logs out the current user and redirect to homepage.

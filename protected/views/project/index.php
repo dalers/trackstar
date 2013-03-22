@@ -30,12 +30,30 @@ endif; ?>
 )); ?>
 
 <?php 
+//fragment caching approach
+$key = "TrackStar.ProjectListing.RecentComments";
+//if($this->beginCache($key, array('duration'=>120))) {
+if($this->beginCache($key, array('dependency'=>array(
+			'class'=>'system.caching.dependencies.CDbCacheDependency',
+			'sql'=>'SELECT MAX(update_time) FROM tbl_comment')))) {
+ 	$this->beginWidget('zii.widgets.CPortlet', array(
+		'title'=>'Recent Comments',
+	));  
+	$this->widget('RecentCommentsWidget');
+	$this->endWidget();
+	$this->endCache(); 
+}
+
+
+
+	/*
 	$this->beginWidget('zii.widgets.CPortlet', array(
 		'title'=>'Recent Comments',
 	));  
 
 	$this->widget('RecentCommentsWidget');
 
-	$this->endWidget(); 
+	$this->endWidget();
+	*/ 
 ?>
 

@@ -15,8 +15,17 @@ class ProjectController extends Controller
 	{
 		return array(
 			'accessControl', // perform access control for CRUD operations
+			/*
+			//example of entire page caching - turned off as this does not allow us to use the pagination for  issues
+			array(
+	            'COutputCache + view',  //cache the entire output from the actionView() method for 2 minutes
+	            'duration'=>120,
+	            'varyByParam'=>array('id'),
+	        ),
+			*/
 		);
 	}
+	
 
 	/**
 	 * Displays a particular model.
@@ -139,7 +148,8 @@ class ProjectController extends Controller
 			$this->createUrl('comment/feed'));
 			
 		//get the latest system message to display based on the update_time column
-		$sysMessage = SysMessage::model()->find(array('order'=>'t.update_time DESC',));
+		//$sysMessage = SysMessage::model()->find(array('order'=>'t.update_time DESC',));
+		$sysMessage = SysMessage::getLatest();
 		if($sysMessage !== null)
 			$message = $sysMessage->message;
 		else
@@ -212,6 +222,7 @@ class ProjectController extends Controller
 		$model=Project::model()->findByPk($id);
 		if($model===null)
 			throw new CHttpException(404,'The requested page does not exist.');
+			//throw new CException('This is an example of throwing a CException');
 		return $model;
 	}
 

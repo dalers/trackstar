@@ -99,4 +99,47 @@ class SysMessage extends TrackstarActiveRecord
 			'criteria'=>$criteria,
 		));
 	}
+	
+	/**
+		 * Retrieves the most recent system message.
+		 * @return SysMessage the AR instance representing the latest system message.
+		 */
+
+	public static function getLatest()
+	{
+		//use the query caching approach
+		$dependency = new CDbCacheDependency('SELECT MAX(update_time) FROM tbl_sys_message');
+		$sysMessage = SysMessage::model()->cache(1800, $dependency)->find(array(
+			'order'=>'t.update_time DESC',
+		));
+		return $sysMessage;
+		
+		/*
+		//see if it is in the cache, if so, just return it
+		if( ($cache=Yii::app()->cache)!==null)
+		{
+			$key='TrackStar.ProjectListing.SystemMessage';
+			if(($sysMessage=$cache->get($key))!==false)
+				return $sysMessage;
+		}
+		//The system message was either not found in the cache, or   
+		//there is no cache component defined for the application
+		//retrieve the system message from the database 
+		$sysMessage = SysMessage::model()->find(array(
+			'order'=>'t.update_time DESC',
+		));
+		if($sysMessage != null)
+		{
+			//a valid message was found. Store it in cache for future retrievals
+			if(isset($key))
+				//$cache->set($key,$sysMessage,300);
+				$cache->set($key, $sysMessage, 0, new CDbCacheDependency('SELECT MAX(update_time) FROM tbl_sys_message'));		
+		    return $sysMessage;
+		}
+		else
+		    return null;
+		*/
+		
+	}
+	
 }
