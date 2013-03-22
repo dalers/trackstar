@@ -48,8 +48,8 @@ class User extends TrackStarActiveRecord
 			// NOTE: you should only define rules for those attributes that
 			// will receive user inputs.
 			return array(
-				array('email, username, password', 'required'),
-				array('email, username, password', 'length', 'max'=>256),
+				array('email, username, password, password_repeat', 'required'),
+				array('email, username, password', 'length', 'max'=>255),
 				array('email, username', 'unique'),
 				array('password', 'compare'),
 				array('password_repeat', 'safe'),

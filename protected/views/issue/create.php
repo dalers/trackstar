@@ -1,12 +1,12 @@
 <?php
 $this->breadcrumbs=array(
-	'Issues'=>array('index'),
-	'Create',
+	'Issues'=>array('index', 'pid'=>$model->project_id),
+	'Create Issue',
 );
 
 $this->menu=array(
-	array('label'=>'List Issue', 'url'=>array('index')),
-	array('label'=>'Manage Issue', 'url'=>array('admin')),
+	array('label'=>'List Issues', 'url'=>array('index', 'pid'=>$model->project_id)),
+	array('label'=>'Manage Issues', 'url'=>array('admin', 'pid'=>$model->project_id)),
 );
 ?>
 

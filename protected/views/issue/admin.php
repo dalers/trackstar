@@ -5,7 +5,7 @@ $this->breadcrumbs=array(
 );
 
 $this->menu=array(
-	array('label'=>'List Issue', 'url'=>array('index', 'pid'=>$model->project->id)),
+	array('label'=>'List Issues', 'url'=>array('index', 'pid'=>$model->project->id)),
 	array('label'=>'Create Issue', 'url'=>array('create', 'pid'=>$model->project->id)),
 );
 

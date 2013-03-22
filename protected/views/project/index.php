@@ -5,7 +5,7 @@ $this->breadcrumbs=array(
 
 $this->menu=array(
 	array('label'=>'Create Project', 'url'=>array('create')),
-	array('label'=>'Manage Project', 'url'=>array('admin')),
+	array('label'=>'Manage Projects', 'url'=>array('admin')),
 );
 ?>
 
@@ -15,3 +15,14 @@ $this->menu=array(
 	'dataProvider'=>$dataProvider,
 	'itemView'=>'_view',
 )); ?>
+
+<?php 
+	$this->beginWidget('zii.widgets.CPortlet', array(
+		'title'=>'Recent Comments',
+	));  
+
+	$this->widget('RecentCommentsWidget');
+
+	$this->endWidget(); 
+?>
+

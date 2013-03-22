@@ -7,7 +7,7 @@ class m120509_224029_create_project_table extends CDbMigration
 		$this->createTable('tbl_project', array(
 		            'id' => 'pk',
 		            'name' => 'string NOT NULL',
-		            'description' => 'text',
+		            'description' => 'text NOT NULL',
 					'create_time' => 'datetime DEFAULT NULL',
 					'create_user_id' => 'int(11) DEFAULT NULL',
 					'update_time' => 'datetime DEFAULT NULL',
