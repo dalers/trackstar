@@ -32,11 +32,11 @@ $this->menu=array(
 			),
 			array(        
 				'name'=>'owner_id',
-		    		'value'=>isset($model->owner)?CHtml::encode($model->owner->username):"unknown"
+		    	'value'=>isset($model->owner)?CHtml::encode($model->owner->username):"unknown"
 			),
 			array(        
 				'name'=>'requester_id',
-		    		'value'=>isset($model->requester)?CHtml::encode($model->requester->username):"unknown"
+		    	'value'=>isset($model->requester)?CHtml::encode($model->requester->username):"unknown"
 			),
 
 		),

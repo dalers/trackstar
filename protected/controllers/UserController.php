@@ -1,18 +1,12 @@
 <?php
 
-class IssueController extends Controller
+class UserController extends Controller
 {
 	/**
 	 * @var string the default layout for the views. Defaults to '//layouts/column2', meaning
 	 * using two-column layout. See 'protected/views/layouts/column2.php'.
 	 */
 	public $layout='//layouts/column2';
-	
-	/**
-	 * @var private property containing the associated Project model instance.
-	 */
-	private $_project = null; 
-	
 
 	/**
 	 * @return array action filters
@@ -21,7 +15,6 @@ class IssueController extends Controller
 	{
 		return array(
 			'accessControl', // perform access control for CRUD operations
-			'projectContext + create index admin', //check to ensure valid project context
 		);
 	}
 
@@ -68,15 +61,14 @@ class IssueController extends Controller
 	 */
 	public function actionCreate()
 	{
-		$model=new Issue;
-		$model->project_id = $this->_project->id;
+		$model=new User;
 
 		// Uncomment the following line if AJAX validation is needed
 		// $this->performAjaxValidation($model);
 
-		if(isset($_POST['Issue']))
+		if(isset($_POST['User']))
 		{
-			$model->attributes=$_POST['Issue'];
+			$model->attributes=$_POST['User'];
 			if($model->save())
 				$this->redirect(array('view','id'=>$model->id));
 		}
@@ -98,9 +90,9 @@ class IssueController extends Controller
 		// Uncomment the following line if AJAX validation is needed
 		// $this->performAjaxValidation($model);
 
-		if(isset($_POST['Issue']))
+		if(isset($_POST['User']))
 		{
-			$model->attributes=$_POST['Issue'];
+			$model->attributes=$_POST['User'];
 			if($model->save())
 				$this->redirect(array('view','id'=>$model->id));
 		}
@@ -135,27 +127,21 @@ class IssueController extends Controller
 	 */
 	public function actionIndex()
 	{
-		$dataProvider=new CActiveDataProvider('Issue', array(
-			'criteria'=>array(
-				'condition'=>'project_id=:projectId',
-				'params'=>array(':projectId'=>$this->_project->id),
-			),
-		));
+		$dataProvider=new CActiveDataProvider('User');
 		$this->render('index',array(
 			'dataProvider'=>$dataProvider,
 		));
 	}
-	
+
 	/**
 	 * Manages all models.
 	 */
 	public function actionAdmin()
 	{
-		$model=new Issue('search');
+		$model=new User('search');
 		$model->unsetAttributes();  // clear any default values
-		if(isset($_GET['Issue']))
-			$model->attributes=$_GET['Issue'];
-		$model->project_id = $this->_project->id;
+		if(isset($_GET['User']))
+			$model->attributes=$_GET['User'];
 
 		$this->render('admin',array(
 			'model'=>$model,
@@ -169,7 +155,7 @@ class IssueController extends Controller
 	 */
 	public function loadModel($id)
 	{
-		$model=Issue::model()->findByPk($id);
+		$model=User::model()->findByPk($id);
 		if($model===null)
 			throw new CHttpException(404,'The requested page does not exist.');
 		return $model;
@@ -181,49 +167,10 @@ class IssueController extends Controller
 	 */
 	protected function performAjaxValidation($model)
 	{
-		if(isset($_POST['ajax']) && $_POST['ajax']==='issue-form')
+		if(isset($_POST['ajax']) && $_POST['ajax']==='user-form')
 		{
 			echo CActiveForm::validate($model);
 			Yii::app()->end();
 		}
 	}
-	
-	/**
-	 * Protected method to load the associated Project model class
-	 * @param integer project_id the primary identifier of the associated Project
-	 * @return object the Project data model based on the primary key 
-	 */
-	protected function loadProject($projectId)	 
-	{
-		//if the project property is null, create it based on input id
-		if($this->_project===null)
-		{
-			$this->_project=Project::model()->findByPk($projectId);
-			if($this->_project===null)
-	        {
-				throw new CHttpException(404,'The requested project does not exist.'); 
-			}
-		}
-
-		return $this->_project; 
-	} 
-	
-	/**
-	 * In-class defined filter method, configured for use in the above filters() method
-	 * It is called before the actionCreate() action method is run in order to ensure a proper project context
-	 */
-	public function filterProjectContext($filterChain)
-	{   
-		//set the project identifier based on either the GET input 
-	    //request variables   
-		if(isset($_GET['pid']))
-			$this->loadProject($_GET['pid']);   
-		else
-			throw new CHttpException(403,'Must specify a project before performing this action.');
-			
-		//complete the running of other filters and execute the requested action
-		$filterChain->run(); 
-	} 	
-	
-	
 }
