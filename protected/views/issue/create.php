@@ -5,8 +5,8 @@ $this->breadcrumbs=array(
 );
 
 $this->menu=array(
-	array('label'=>'List Issues', 'url'=>array('index')),
-	array('label'=>'Manage Issues', 'url'=>array('admin')),
+	array('label'=>'List Issue', 'url'=>array('index')),
+	array('label'=>'Manage Issue', 'url'=>array('admin')),
 );
 ?>
 

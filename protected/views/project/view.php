@@ -12,6 +12,12 @@ $this->menu=array(
 	array('label'=>'Manage Project', 'url'=>array('admin')),
 	array('label'=>'Create Issue', 'url'=>array('issue/create', 'pid'=>$model->id)),
 );
+
+if(Yii::app()->user->checkAccess('createUser',array('project'=>$model)))
+{
+	$this->menu[] = array('label'=>'Add User To Project', 'url'=>array('adduser', 'id'=>$model->id));
+}
+
 ?>
 
 <h1>View Project #<?php echo $model->id; ?></h1>

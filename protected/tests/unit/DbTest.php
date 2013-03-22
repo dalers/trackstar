@@ -3,7 +3,7 @@ class DbTest extends CTestCase
 {  
      public function testConnection()
      {
-		$this->assertNotNull(Yii::app()->db->connectionString);
+	$this->assertNotEquals(NULL, Yii::app()->db); 
      } 
 
 }

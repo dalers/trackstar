@@ -62,8 +62,6 @@ class Issue extends TrackStarActiveRecord
 			array('project_id, type_id, status_id, owner_id, requester_id, create_user_id, update_user_id', 'numerical', 'integerOnly'=>true),
 			array('name', 'length', 'max'=>255),
 			array('description, create_time, update_time', 'safe'),
-			array('type_id', 'in', 'range'=>self::getAllowedTypeRange()),
-			array('status_id', 'in', 'range'=>self::getAllowedStatusRange()),
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
 			array('id, name, description, project_id, type_id, status_id, owner_id, requester_id, create_time, create_user_id, update_time, update_user_id', 'safe', 'on'=>'search'),
@@ -179,24 +177,6 @@ class Issue extends TrackStarActiveRecord
 	{
 		$typeOptions=$this->typeOptions;
 		return isset($typeOptions[$this->type_id]) ? $typeOptions[$this->type_id] : "unknown type ({$this->type_id})";
-	}
-	
-	public static function getAllowedTypeRange()
-	{
-	 	return array(
-	 			self::TYPE_BUG,
-	 			self::TYPE_FEATURE,
-	 			self::TYPE_TASK,
-	 		);
-	}
-	 	
-	public function getAllowedStatusRange()
-	{
-	 		return array(
-	 			self::STATUS_NOT_STARTED,
-	 			self::STATUS_STARTED,
-	 			self::STATUS_FINISHED,
-			);
 	}
 
 	

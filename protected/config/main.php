@@ -21,7 +21,7 @@ return array(
 	'modules'=>array(
 		'gii'=>array(
 			'class'=>'system.gii.GiiModule',
-			'password'=>false,
+			'password'=>'admin',
 		 	// If removed, Gii defaults to localhost only. Edit carefully to taste.
 			'ipFilters'=>array('127.0.0.1','::1'),
 		),
@@ -44,6 +44,15 @@ return array(
 			),
 		),
 		*/
+		'authManager'=>array(
+			'class'=>'CDbAuthManager',
+		    'connectionID'=>'db',
+			'itemTable' => 'tbl_auth_item',
+			'itemChildTable' => 'tbl_auth_item_child',
+			'assignmentTable' => 'tbl_auth_assignment',
+		),    
+		    
+		
 		
 		'db'=>array(
 			'connectionString' => 'mysql:host=127.0.0.1;dbname=trackstar',

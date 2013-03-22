@@ -5,11 +5,11 @@ $this->breadcrumbs=array(
 );
 
 $this->menu=array(
-	array('label'=>'List Issues', 'url'=>array('index', 'pid'=>$model->project->id)),
+	array('label'=>'List Issue', 'url'=>array('index', 'pid'=>$model->project->id)),
 	array('label'=>'Create Issue', 'url'=>array('create', 'pid'=>$model->project->id)),
 	array('label'=>'Update Issue', 'url'=>array('update', 'id'=>$model->id)),
 	array('label'=>'Delete Issue', 'url'=>'#', 'linkOptions'=>array('submit'=>array('delete','id'=>$model->id),'confirm'=>'Are you sure you want to delete this item?')),
-	array('label'=>'Manage Issues', 'url'=>array('admin', 'pid'=>$model->project->id)),
+	array('label'=>'Manage Issue', 'url'=>array('admin', 'pid'=>$model->project->id)),
 );
 
 ?>
@@ -32,11 +32,11 @@ $this->menu=array(
 			),
 			array(        
 				'name'=>'owner_id',
-		    	'value'=>isset($model->owner)?CHtml::encode($model->owner->username):"unknown"
+		    		'value'=>CHtml::encode($model->owner->username)
 			),
 			array(        
 				'name'=>'requester_id',
-		    	'value'=>isset($model->requester)?CHtml::encode($model->requester->username):"unknown"
+		    		'value'=>CHtml::encode($model->requester->username)
 			),
 
 		),

@@ -48,10 +48,9 @@ class User extends TrackStarActiveRecord
 			// NOTE: you should only define rules for those attributes that
 			// will receive user inputs.
 			return array(
-				array('email, username, password, password_repeat', 'required'),
-				array('email, username, password', 'length', 'max'=>255),
+				array('email, username, password', 'required'),
+				array('email, username, password', 'length', 'max'=>256),
 				array('email, username', 'unique'),
-				array('email', 'email'),
 				array('password', 'compare'),
 				array('password_repeat', 'safe'),
 				// The following rule is used by search().
@@ -147,7 +146,5 @@ class User extends TrackStarActiveRecord
 	{
 		return $this->hashPassword($password)===$this->password;
 	}
-	
-	
 	
 }

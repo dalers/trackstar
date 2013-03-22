@@ -26,32 +26,6 @@ class IssueController extends Controller
 	}
 
 	/**
-	 * Specifies the access control rules.
-	 * This method is used by the 'accessControl' filter.
-	 * @return array access control rules
-	 */
-	public function accessRules()
-	{
-		return array(
-			array('allow',  // allow all users to perform 'index' and 'view' actions
-				'actions'=>array('index','view'),
-				'users'=>array('*'),
-			),
-			array('allow', // allow authenticated user to perform 'create' and 'update' actions
-				'actions'=>array('create','update'),
-				'users'=>array('@'),
-			),
-			array('allow', // allow admin user to perform 'admin' and 'delete' actions
-				'actions'=>array('admin','delete'),
-				'users'=>array('admin'),
-			),
-			array('deny',  // deny all users
-				'users'=>array('*'),
-			),
-		);
-	}
-
-	/**
 	 * Displays a particular model.
 	 * @param integer $id the ID of the model to be displayed
 	 */
@@ -190,7 +164,7 @@ class IssueController extends Controller
 	
 	/**
 	 * Protected method to load the associated Project model class
-	 * @param integer project_id the primary identifier of the associated Project
+	 * @project_id the primary identifier of the associated Project
 	 * @return object the Project data model based on the primary key 
 	 */
 	protected function loadProject($projectId)	 
@@ -198,7 +172,7 @@ class IssueController extends Controller
 		//if the project property is null, create it based on input id
 		if($this->_project===null)
 		{
-			$this->_project=Project::model()->findByPk($projectId);
+			$this->_project=Project::model()->findbyPk($projectId);
 			if($this->_project===null)
 	        {
 				throw new CHttpException(404,'The requested project does not exist.'); 
