@@ -1,4 +1,7 @@
 <?php
+Yii::import('application.vendors.*');
+require_once('Zend/Feed.php');  
+require_once('Zend/Feed/Rss.php');
 
 class CommentController extends Controller
 {
@@ -27,7 +30,7 @@ class CommentController extends Controller
 	{
 		return array(
 			array('allow',  // allow all users to perform 'index' and 'view' actions
-				'actions'=>array('index','view'),
+				'actions'=>array('index','view','feed'),
 				'users'=>array('*'),
 			),
 			array('allow', // allow authenticated user to perform 'create' and 'update' actions
@@ -159,6 +162,51 @@ class CommentController extends Controller
 		if($model===null)
 			throw new CHttpException(404,'The requested page does not exist.');
 		return $model;
+	}
+	
+	/**
+	 * Uses Zend Feed to return an RSS formatted comments data feed
+	 */
+	public function actionFeed()
+	{
+		if(isset($_GET['pid'])) 
+		{
+			$comments = Comment::model()->with(array(
+								'issue'=>array(
+									'condition'=>'project_id=:projectId', 
+									'params'=>array(':projectId'=>intval($_GET['pid'])),
+								)))->recent(20)->findAll();
+			
+		}
+		else   
+			$comments = Comment::model()->recent(20)->findAll();  
+
+		//convert from an array of comment AR class instances to an name=>value array for Zend
+		$entries=array(); 
+
+		foreach($comments as $comment)
+		{
+
+		    $entries[]=array(
+		            'title'=>CHtml::encode($comment->issue->name),     
+		            'link'=>CHtml::encode($this->createAbsoluteUrl('issue/view',array('id'=>$comment->issue->id))),  
+		            'description'=> $comment->author->username . ' says:<br>' . $comment->content,
+		            'lastUpdate'=>strtotime($comment->create_time),   
+		            'author'=>CHtml::encode($comment->author->username),
+		     );
+		}  
+
+		//now use the Zend Feed class to generate the Feed
+		// generate and render RSS feed
+		$feed=Zend_Feed::importArray(array(
+		     'title'   => 'Trackstar Project Comments Feed',
+		     'link'    => $this->createAbsoluteUrl(''),
+		     'charset' => 'UTF-8',
+		     'entries' => $entries,      
+		 ), 'rss');
+
+		$feed->send();
+
 	}
 
 	/**

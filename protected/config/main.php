@@ -81,6 +81,16 @@ return array(
 				*/
 			),
 		),
+		'urlManager'=>array(
+			'urlFormat'=>'path',
+			'rules'=>array(   
+				'commentfeed'=>array('comment/feed', 'urlSuffix'=>'.xml', 'caseSensitive'=>false),
+				'<pid:\d+>/commentfeed'=>array('comment/feed', 'urlSuffix'=>'.xml', 'caseSensitive'=>false),
+				
+			),
+			'showScriptName'=>false,
+		),    
+		
 	),
 
 	// application-level parameters that can be accessed
