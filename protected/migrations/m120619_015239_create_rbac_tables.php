@@ -64,9 +64,15 @@ class m120619_015239_create_rbac_tables extends CDbMigration
 
 	public function down()
 	{
-		$this->truncateTable('tbl_auth_assignment');
-		$this->truncateTable('tbl_auth_item_child');
-		$this->truncateTable('tbl_auth_item');
+		// truncateTable causes error, cannot truncate InnoDB
+		// table with foreign keys using MySQL 5.5+
+		// $this->truncateTable('tbl_auth_assignment');
+		// $this->truncateTable('tbl_auth_item_child');
+		// $this->truncateTable('tbl_auth_item');
+		$this->delete('tbl_auth_assignment');
+		$this->delete('tbl_auth_item_child');
+		$this->delete('tbl_auth_item');
+		
 		$this->dropTable('tbl_auth_assignment');
 		$this->dropTable('tbl_auth_item_child');
 		$this->dropTable('tbl_auth_item');

@@ -6,5 +6,4 @@ $this->breadcrumbs=array(
 ?>
 <h1>About</h1>
 
-<p>This is a "static" page. You may change the content of this page
-by updating the file <tt><?php echo __FILE__; ?></tt>.</p>
+<p><strong>TrackStar</strong> is an online, user-based, project management and task-tracking application that provides the long-format example context for the associated <a href="http://www.seesawlabs.com/yii-book">Yii book</a>. Starting from chapter 3 onward, readers of the <a href="http://www.seesawlabs.com/yii-book">book</a> begin the step-by-step journey of building this application from conception through production readiness.</p>
