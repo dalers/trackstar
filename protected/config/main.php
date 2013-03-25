@@ -10,7 +10,7 @@ return array(
 	'name'=>'TrackStar',
 	'id'=>'TrackStar',
 	'theme'=>'newtheme',
-	'language'=>'rev',
+	//'language'=>'rev',
 
 	// preloading 'log' component
 	'preload'=>array('log'),
