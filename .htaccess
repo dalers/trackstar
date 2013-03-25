@@ -9,5 +9,22 @@
 <IfModule mod_rewrite.c>
   RewriteCond %{REQUEST_FILENAME} !-f
   RewriteCond %{REQUEST_FILENAME} !-d
-  RewriteRule . index.php
+
+  # de facto std recommendation, but appears to assume/require that app is root of webserver
+  # RewriteRule . index.php
+
+  # Yii forum post "Problem with .htaccess"
+  # www.yiiframework.com/forum/index.php/topic/15694-problem-with-htaccess/ 
+  # (1) RewriteRule ^.*$ /index.php
+  # (2) RewriteRule ^.*$ /trackstar/index.php
+
+  # seems to be more formal description of Yii forum post (1)
+  # forums.laravel.io/viewtopic.php?id=5504
+  # RewriteRule ^(.*)$ /index.php/$1 [L]
+
+  # seems to be more formal description of Yii forum post (2)
+  # ellislab.com/forums/membe%20r/140390/viewthread/234295/
+  # RewriteRule ^(.*)$ http://hotstuff.can.bjs/trackstar/index.php/$1 [L,QSA]
+
+  RewriteRule ^.*$ /trackstar/index.php
 </IfModule>
