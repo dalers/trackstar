@@ -62,9 +62,15 @@ class m120511_173401_create_issue_user_and_assignment_tables extends CDbMigratio
 
 	public function safeDown()
 	{
-		$this->truncateTable('tbl_project_user_assignment');
-		$this->truncateTable('tbl_issue');
-		$this->truncateTable('tbl_user');
+		// truncateTable causes error, cannot truncate InnoDB
+		// table with foreign keys using MySQL 5.5+
+		// $this->truncateTable('tbl_project_user_assignment');
+		// $this->truncateTable('tbl_issue');
+		// $this->truncateTable('tbl_user');		
+		$this->delete('tbl_project_user_assignment');
+		$this->delete('tbl_issue');
+		$this->delete('tbl_user');
+			
 		$this->dropTable('tbl_project_user_assignment');
 		$this->dropTable('tbl_issue');
 		$this->dropTable('tbl_user');
